@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +19,9 @@
         android:theme="@style/MainTheme">
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/MainTheme">
+
+            android:theme="@style/MainTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,14 +29,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode="stateHidden"
             android:name=".ui.LockPhoneViaSmsActivity"
             android:label="@string/title_activity_lock_phone_via_sms"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".ui.RingSilentPhoneActivity" />
-        <activity android:name=".ui.PhoneCurrentLocationActivtiy" />
-        <activity android:name=".ui.AntiTheftSecurityActivity" />
+        <activity
+            android:name=".ui.RingSilentPhoneActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.PhoneCurrentLocationActivtiy"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.AntiTheftSecurityActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+
+        <!-- BEGIN_INCLUDE(device_admin_declaration) -->
+        <receiver
+            android:name=".receiver.DeviceAdminReceiverLockPhone"
+            android:description="@string/lost_phone_admin"
+            android:label="@string/lost_phone_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/security_policies" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        <!-- END_INCLUDE(device_admin_declaration) -->
+
+        <receiver
+            android:name=".receiver.SMSReceiver"
+            android:priority="999"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

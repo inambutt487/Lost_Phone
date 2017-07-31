@@ -55,7 +55,7 @@
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/enableLockPhone"
+                    android:id="@+id/enableLockPhoneSms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -134,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
+                android:onClick="onClick"
                 android:text="@string/save"
                 android:textAllCaps="false"
                 android:textSize="16sp"
@@ -141,16 +142,15 @@
 
             <Button
                 android:id="@+id/btnEmail"
-
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
+                android:onClick="onClick"
                 android:text="@string/email"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
     </LinearLayout>

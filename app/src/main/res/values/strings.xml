@@ -38,5 +38,7 @@
     <string name="enter_trusted_contact_1">Enter Trusted contact # 1</string>
     <string name="enter_trusted_contact_2">Enter Trusted contact # 2</string>
     <string name="custom_msg_for_friend">Hey ,I am ____,my phone has been stolen by number sending this message.Do not reply it,and contact me via other source ASAP</string>
+    <string name="lost_phone_admin">Lost Phone Admin</string>
+    <string name="extra_explanation_admin_rights">Please Activate these permissions to lock screen via SMS.These are necessary</string>
 
 </resources>
