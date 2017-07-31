@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">lost Phone</string>
+    <string name="image_telling">Image telling</string>
+    <string name="lock_phone_via_sms">Lock phone via Sms</string>
+    <string name="ring_silent_phone">Ring silent phone</string>
+    <string name="get_phone_current_location">Get phone current location</string>
+    <string name="antitheft_security">Anti theft security</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_lock_phone_via_sms">LockPhoneViaSmsActivity</string>
+    <string name="enable_lock_sim_feature">By enabling the following features,
+        you can remotely lock your phone by below command via sms from any other phone</string>
+    <string name="enable_ring_silent_phone_feature">By enabling the following features,
+        you can remotely ring your silent phone by sending below command
+        via sms from any other phone</string>
+    <string name="enable_location_phone_feature">By enabling the following features,
+        you can remotely get phone by sending below command
+        via sms from any other phone</string>
+    <string name="enable_anti_theft_phone_feature">By enabling the following features,
+       whenever someone changes sim it will notify it
+        via sms from any other phone</string>
+
+
+
+    <string name="enable">Enable</string>
+    <string name="secret_command">Secret Command :</string>
+    <string name="lock_code">Lock Code :</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+    <string name="lockmyphone">lockmyphone</string>
+    <string name="_12345">12345</string>
+    <string name="ringmyphone">ringmyphone</string>
+    <string name="getphonelocation">getphoneLocation</string>
+    <string name="enter_trusted_contact_1">Enter Trusted contact # 1</string>
+    <string name="enter_trusted_contact_2">Enter Trusted contact # 2</string>
+    <string name="custom_msg_for_friend">Hey ,I am ____,my phone has been stolen by number sending this message.Do not reply it,and contact me via other source ASAP</string>
+
+</resources>
