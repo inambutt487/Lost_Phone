@@ -59,6 +59,17 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity implements View.O
         deviceAdminManger = new DeviceAdminManger(LockPhoneViaSmsActivity.this);
     }
 
+
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        enableLockPhoneSms = findViewById(R.id.enableLockPhoneSms);
+        edSecretCommand = findViewById(R.id.edSecretCommand);
+        edLockCode = findViewById(R.id.edLockCode);
+        btnEmail = findViewById(R.id.btnEmail);
+        btnSave = findViewById(R.id.btnSave);
+    }
+
     private void setData() {
         boolean isLockEnable =
                 LocalPrefManger.getEnableLockPhoneSMS(LockPhoneViaSmsActivity.this);
@@ -71,20 +82,20 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity implements View.O
                 getLockCodeSMS(LockPhoneViaSmsActivity.this));
     }
 
-    private void initUI() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        enableLockPhoneSms = findViewById(R.id.enableLockPhoneSms);
-        edSecretCommand = findViewById(R.id.edSecretCommand);
-        edLockCode = findViewById(R.id.edLockCode);
-        btnEmail = findViewById(R.id.btnEmail);
-        btnSave = findViewById(R.id.btnSave);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSave:
+
+                /*Todo Check for validations*/
+                String secretCommand = edSecretCommand.getText()
+                        .toString().toLowerCase().trim();
+                String lockCode = edLockCode.getText().toString().trim();
+                LocalPrefManger.setSecretCommandSMS(this, secretCommand);
+                LocalPrefManger.setLockCodeSMS(this, lockCode);
+                LocalPrefManger.setEnableLockPhoneSMS(this, true);
+                finish();
+
                 break;
             case R.id.btnEmail:
                 break;

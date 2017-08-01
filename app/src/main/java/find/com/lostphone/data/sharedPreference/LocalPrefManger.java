@@ -95,12 +95,13 @@ public class LocalPrefManger implements IPrefConst {
         saveBoolean(mContext, KEY_ENABLE_LOCK_PHONE_SMS, mValue);
     }
 
+
     public static String getSecretCommandSMS(Context mContext) {
 
         return getString(mContext, KEY_SECRET_COMMAND_SMS, "lockmyphone");
     }
 
-    public static void setEnableLockPhoneSMS(Context mContext, String mValue) {
+    public static void setSecretCommandSMS(Context mContext, String mValue) {
         saveString(mContext, KEY_SECRET_COMMAND_SMS, mValue);
     }
 
@@ -113,5 +114,7 @@ public class LocalPrefManger implements IPrefConst {
     public static void setLockCodeSMS(Context mContext, String mValue) {
         saveString(mContext, KEY_LOCK_CODE_SMS, mValue);
     }
+
+
 
 }
