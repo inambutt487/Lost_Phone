@@ -9,7 +9,8 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
 import find.com.lostphone.data.sharedPreference.LocalPrefManger;
-import find.com.lostphone.utils.DeviceAdminManger;
+import find.com.lostphone.helper.DeviceAdminManger;
+import find.com.lostphone.ui.RingingActivity;
 
 /**
  * Created by Aurang Zeb on 31-Jul-17.
@@ -50,8 +51,16 @@ public class SMSReceiver extends BroadcastReceiver {
                                         getSecretCommandSMS(context);
                                 if (message.equals(secretCommand)) {
                                     /*Todo change Device password */
-                                    int lockCode = Integer.parseInt(LocalPrefManger.getLockCodeSMS(context));
-
+                                    adminManger.lockWithPIN(LocalPrefManger.
+                                            getLockCodeSMS(context));
+                                    this.abortBroadcast();
+                                    break;
+                                }
+                                else if(message.equals("ringmyphone")){
+                                    Intent ringingActivityIntent=
+                                            new Intent(context, RingingActivity.class);
+                                    ringingActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(ringingActivityIntent);
 
                                 }
                             }

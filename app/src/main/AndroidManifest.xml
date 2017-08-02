@@ -9,7 +9,9 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
+    <!--     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,6 @@
         android:theme="@style/MainTheme">
         <activity
             android:name=".ui.MainActivity"
-
             android:theme="@style/MainTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -33,7 +34,6 @@
             android:label="@string/title_activity_lock_phone_via_sms"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".ui.RingSilentPhoneActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -44,7 +44,6 @@
             android:name=".ui.AntiTheftSecurityActivity"
             android:windowSoftInputMode="stateHidden" />
 
-
         <!-- BEGIN_INCLUDE(device_admin_declaration) -->
         <receiver
             android:name=".receiver.DeviceAdminReceiverLockPhone"
@@ -54,6 +53,7 @@
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/security_policies" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
@@ -62,13 +62,14 @@
 
         <receiver
             android:name=".receiver.SMSReceiver"
-            android:priority="999"
-            android:permission="android.permission.BROADCAST_SMS">
+            android:permission="android.permission.BROADCAST_SMS"
+            android:priority="99999">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.RingingActivity"></activity>
     </application>
 
 </manifest>

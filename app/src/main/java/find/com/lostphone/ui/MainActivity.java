@@ -22,6 +22,7 @@ import com.google.android.gms.ads.VideoController;
 import com.google.android.gms.ads.VideoOptions;
 
 import find.com.lostphone.R;
+import find.com.lostphone.helper.AudioMangerHelper;
 import find.com.lostphone.utils.LostPhoneConstant;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         LostPhoneConstant.LOCK_PHONE_VIA_SMS);
                 break;
             case R.id.txtRingSilentPhone:
+                AudioMangerHelper mangerHelper = new AudioMangerHelper(MainActivity.this);
                 startActivityForResult(new Intent(MainActivity.this,
                                 RingSilentPhoneActivity.class),
                         LostPhoneConstant.RING_SILENT_PHONE);

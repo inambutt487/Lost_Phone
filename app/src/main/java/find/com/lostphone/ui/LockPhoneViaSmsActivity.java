@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import find.com.lostphone.R;
 import find.com.lostphone.data.sharedPreference.LocalPrefManger;
-import find.com.lostphone.utils.DeviceAdminManger;
+import find.com.lostphone.helper.DeviceAdminManger;
 
 public class LockPhoneViaSmsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_ENABLE_ADMIN = 20;
