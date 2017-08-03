@@ -2,26 +2,36 @@ package find.com.lostphone.helper;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.util.Log;
 
 /**
  * Created by Aurang Zeb on 02-Aug-17.
  */
 
 public class AudioMangerHelper {
-    AudioManager audioManager;
+    private AudioManager audioManager;
+    private int oldRingerMode;
+    private int oldStreamVolume;
 
     public AudioMangerHelper(Context context) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        int ringerMode = audioManager.getRingerMode();
-        int mode = audioManager.getMode();
+        oldRingerMode = audioManager.getRingerMode();
+        oldStreamVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    }
 
-        Log.d("AudioMangerHelper", "ringerMode " + ringerMode + " mode " + mode);
+
+    public void setRingerModeNormal() {
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        Log.d("AudioMangerHelper", "ringerMode " + ringerMode + " mode " + mode);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        Log.d("AudioMangerHelper", "ringerMode " + ringerMode + " mode " + mode);
+        audioManager.setStreamVolume
+                (AudioManager.STREAM_MUSIC,
+                        audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+//        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
+    }
+
+    public void setOldRingerModeAndStreamVolume() {
+        audioManager.setRingerMode(oldRingerMode);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                oldStreamVolume, 0);
     }
 
 

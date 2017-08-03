@@ -10,8 +10,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <!--     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -69,7 +70,22 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.RingingActivity"></activity>
+        <activity
+            android:name=".ui.RingingActivity"
+            android:parentActivityName=".ui.MainActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="find.com.lostphone.ui.MainActivity" />
+        </activity>
+
+        <service
+            android:name=".service.MediaPlayerService"
+            android:enabled="true"
+            android:exported="true">
+
+        </service>
     </application>
 
 </manifest>
