@@ -12,28 +12,27 @@ import android.widget.EditText;
 import find.com.lostphone.R;
 import find.com.lostphone.data.sharedPreference.LocalPrefManger;
 
-public class RingSilentPhoneActivity extends AppCompatActivity
-        implements View.OnClickListener {
+public class PhoneCurrentLocationActivity extends AppCompatActivity
+        implements View.OnClickListener{
 
     Toolbar toolbar;
-    SwitchCompat enableRingPhone;
-    EditText edSecretCommandRing;
-    Button btnSave, btnEmail;
+    SwitchCompat enablePhoneLocation;
+    EditText edSecretLocationCommand;
+    Button btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ring_silent_phone);
-        initData();
+        setContentView(R.layout.activity_phone_current_location_activtiy);
         initUI();
         setData();
-
-        enableRingPhone.setOnCheckedChangeListener(
+        enablePhoneLocation.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton,
                                                  boolean isEnable) {
-                        LocalPrefManger.setRingPhoneEnable(RingSilentPhoneActivity.this,
+                        LocalPrefManger.setLocationPhoneEnable(
+                                PhoneCurrentLocationActivity.this,
                                 isEnable);
 
                     }
@@ -42,45 +41,33 @@ public class RingSilentPhoneActivity extends AppCompatActivity
     }
 
 
-    private void initData() {
-
-    }
-
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        enableRingPhone = findViewById(R.id.enableRingPhone);
-        edSecretCommandRing = findViewById(R.id.edSecretCommandRing);
-        btnSave = findViewById(R.id.btnSave);
-        btnEmail = findViewById(R.id.btnEmail);
+        enablePhoneLocation=findViewById(R.id.enablePhoneLocation);
+        edSecretLocationCommand=findViewById(R.id.edSecretLocationCommand);
+        btnSave=findViewById(R.id.btnSave);
     }
-
-
     private void setData() {
-
-        enableRingPhone.
-                setChecked(
-                        LocalPrefManger.getRingPhoneEnable(RingSilentPhoneActivity.this));
-        edSecretCommandRing.
-                setText(LocalPrefManger.getRingSecretCommand(RingSilentPhoneActivity.this));
+        enablePhoneLocation.setChecked(LocalPrefManger.getLocationPhoneEnable(this));
+        edSecretLocationCommand.setText(LocalPrefManger.getLocationSecretCommand(this));
     }
+
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        switch (view.getId()){
             case R.id.btnSave:
 
                 /*Todo Check for validations*/
-                String secretCommand = edSecretCommandRing.getText()
+                String secretCommand = edSecretLocationCommand.getText()
                         .toString().toLowerCase().trim();
-                LocalPrefManger.setRingSecretCommand
-                        (RingSilentPhoneActivity.this,secretCommand);
+                LocalPrefManger.setLocationSecretCommand
+                        (PhoneCurrentLocationActivity.this,secretCommand);
                 finish();
 
                 break;
             case R.id.btnEmail:
                 break;
         }
-
     }
 }

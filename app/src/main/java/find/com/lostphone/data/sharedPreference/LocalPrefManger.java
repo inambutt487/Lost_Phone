@@ -115,6 +115,42 @@ public class LocalPrefManger implements IPrefConst {
         saveString(mContext, KEY_LOCK_CODE_SMS, mValue);
     }
 
+    /*Ring Phone*/
+    public static boolean getRingPhoneEnable(Context mContext) {
 
+        return getBoolean(mContext, KEY_ENABLE_RING_PHONE, false);
+    }
 
+    public static void setRingPhoneEnable(Context mContext, boolean mValue) {
+        saveBoolean(mContext, KEY_ENABLE_RING_PHONE, mValue);
+    }
+
+    public static String getRingSecretCommand(Context mContext) {
+
+        return getString(mContext, KEY_RING_CODE, "ringmyphone");
+    }
+
+    public static void setRingSecretCommand(Context mContext, String mValue) {
+        saveString(mContext, KEY_RING_CODE, mValue);
+    }
+
+    /* Phone Location*/
+
+    public static boolean getLocationPhoneEnable(Context mContext) {
+
+        return getBoolean(mContext, KEY_ENABLE_LOCATION_PHONE, false);
+    }
+
+    public static void setLocationPhoneEnable(Context mContext, boolean mValue) {
+        saveBoolean(mContext, KEY_ENABLE_LOCATION_PHONE, mValue);
+    }
+
+    public static String getLocationSecretCommand(Context mContext) {
+
+        return getString(mContext, KEY_LOCATION_CODE, "getPhoneLocation");
+    }
+
+    public static void setLocationSecretCommand(Context mContext, String mValue) {
+        saveString(mContext, KEY_LOCATION_CODE, mValue);
+    }
 }

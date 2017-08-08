@@ -40,5 +40,8 @@
     <string name="lost_phone_admin">Lost Phone Admin</string>
     <string name="extra_explanation_admin_rights">Please Activate these permissions to lock screen via SMS.These are necessary</string>
     <string name="i_am_here_buddy">I am here Buddy</string>
+    <string name="improve_location_accuracy">Improve your location accuracy</string>
+    <string name="ensure_location_service">To ensure you get the most accurate location possible,turn on all of your location services</string>
+    <string name="settings">Settings</string>
 
 </resources>

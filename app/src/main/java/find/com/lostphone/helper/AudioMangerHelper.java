@@ -23,8 +23,7 @@ public class AudioMangerHelper {
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
         audioManager.setStreamVolume
                 (AudioManager.STREAM_MUSIC,
-                        audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
-//        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                        audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 10);
 
     }
 

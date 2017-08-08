@@ -22,18 +22,20 @@ public class MediaPlayerService extends Service implements
     public int onStartCommand(Intent intent, int flags, int startId) {
         initMusicPlayer();
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     public void initMusicPlayer() {
         //set player properties
         player = MediaPlayer.create(MediaPlayerService.this, R.raw.alarm);
+
         player.setWakeMode(getApplicationContext(),
                 PowerManager.PARTIAL_WAKE_LOCK);
         player.setLooping(true);
         //set listeners
         player.setOnPreparedListener(this);
         player.setOnErrorListener(this);
+
     }
 
     @Nullable
@@ -73,6 +75,7 @@ public class MediaPlayerService extends Service implements
                 player.stop();
             }
             player.release();
+            player = null;
         }
     }
 }
