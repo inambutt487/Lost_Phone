@@ -64,8 +64,6 @@ public class LocalPrefManger implements IPrefConst {
     }
 
 
-
-
     private static void saveInt(Context mContext, String mKey, int mValue) {
         SharedPreferences mSharedPreferences = mContext.getSharedPreferences(LOST_PHONE_SHARPREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -153,4 +151,63 @@ public class LocalPrefManger implements IPrefConst {
     public static void setLocationSecretCommand(Context mContext, String mValue) {
         saveString(mContext, KEY_LOCATION_CODE, mValue);
     }
+
+    /* Phone Location*/
+    public static String getTrustedContactFirst(Context mContext) {
+
+        return getString(mContext, KEY_TRUSTED_CONTACT_FIRST, "");
+    }
+
+    public static void setTrustedContactFirst(Context mContext, String mValue) {
+        saveString(mContext, KEY_TRUSTED_CONTACT_FIRST, mValue);
+    }
+
+
+    public static String getTrustedContactSecond(Context mContext) {
+
+        return getString(mContext, KEY_TRUSTED_CONTACT_SECOND, "");
+    }
+
+    public static void setTrustedContactSecond(Context mContext, String mValue) {
+        saveString(mContext, KEY_TRUSTED_CONTACT_SECOND, mValue);
+    }
+
+    public static String getLockCodeAntiTheft(Context mContext) {
+
+        return getString(mContext, KEY_SECRET_COMMAND_ANTI_THEFT, "12345");
+    }
+
+    public static void setLockCodeAntiTheft(Context mContext, String mValue) {
+        saveString(mContext, KEY_SECRET_COMMAND_ANTI_THEFT, mValue);
+    }
+
+
+
+    public static boolean getAntiTheftEnable(Context mContext) {
+
+        return getBoolean(mContext, KEY_ENABLE_ANTI_THEFT, false);
+    }
+
+    public static void setAntiTheftEnable(Context mContext, boolean mValue) {
+        saveBoolean(mContext, KEY_ENABLE_ANTI_THEFT, mValue);
+    }
+
+    public static String getMessageAntiTheft(Context mContext) {
+
+        return getString(mContext, KEY_MESSAGE_ANTI_THEFT, "");
+    }
+
+    public static void setMessageAntiTheft(Context mContext, String mValue) {
+        saveString(mContext, KEY_MESSAGE_ANTI_THEFT, mValue);
+    }
+
+    public static String getSimSerialNumber(Context mContext) {
+
+        return getString(mContext, KEY_SIM_SERIAL_NUMBER, "");
+    }
+
+    public static void setSimSerialNumber(Context mContext, String mValue) {
+        saveString(mContext, KEY_SIM_SERIAL_NUMBER, mValue);
+    }
+
 }

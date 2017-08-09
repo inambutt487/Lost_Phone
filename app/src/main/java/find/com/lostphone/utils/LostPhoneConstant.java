@@ -10,4 +10,7 @@ public class LostPhoneConstant {
     public static final int GET_CURRENT_LOCATION_PHONE = 3;
     public static final int ANTI_THEFT_SECURITY = 4;
 
+    public static final String EXTRA_PHONE_NUMBER = "extraPhoneNumber";
+
+
 }

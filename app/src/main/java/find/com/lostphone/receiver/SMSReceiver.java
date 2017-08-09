@@ -11,7 +11,9 @@ import android.telephony.SmsMessage;
 
 import find.com.lostphone.data.sharedPreference.LocalPrefManger;
 import find.com.lostphone.helper.DeviceAdminManger;
+import find.com.lostphone.service.LocationService;
 import find.com.lostphone.ui.RingingActivity;
+import find.com.lostphone.utils.LostPhoneConstant;
 
 /**
  * Created by Aurang Zeb on 31-Jul-17.
@@ -74,8 +76,12 @@ public class SMSReceiver extends BroadcastReceiver {
                                     && LocalPrefManger.getLocationPhoneEnable(context)) {
                                 try {
 
-                                    String messageToSend="Mobile location";
-                                    sendSMS(context,sender,messageToSend);
+                                    Intent serviceIntent = new Intent(context, LocationService.class);
+                                    serviceIntent.putExtra(LostPhoneConstant.EXTRA_PHONE_NUMBER, sender);
+                                    context.startService(serviceIntent);
+
+                               /*     String messageToSend="Mobile location";
+                                    sendSMS(context,sender,messageToSend);*/
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

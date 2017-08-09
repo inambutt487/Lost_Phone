@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSettingsClient = LocationServices.getSettingsClient(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+
     }
 
     private void initUI() {
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buildLocationSettingsRequest();
         startLocationUpdates();
 
-        startService(new Intent(MainActivity.this, LocationService.class));
+        //Get the instance of TelephonyManager
 
     }
 

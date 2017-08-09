@@ -49,7 +49,7 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity implements View.O
                             startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
 
                         } else {
-                            deviceAdminManger.removeAdminRights();
+                            /*deviceAdminManger.removeAdminRights();*/
                         }
                     }
                 });

@@ -1,5 +1,7 @@
 package find.com.lostphone.ui;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -11,9 +13,12 @@ import android.widget.EditText;
 
 import find.com.lostphone.R;
 import find.com.lostphone.data.sharedPreference.LocalPrefManger;
+import find.com.lostphone.helper.DeviceAdminManger;
 
 public class RingSilentPhoneActivity extends AppCompatActivity
         implements View.OnClickListener {
+
+    DeviceAdminManger deviceAdminManger;
 
     Toolbar toolbar;
     SwitchCompat enableRingPhone;
@@ -36,6 +41,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
                         LocalPrefManger.setRingPhoneEnable(RingSilentPhoneActivity.this,
                                 isEnable);
 
+
                     }
                 });
 
@@ -43,7 +49,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
 
 
     private void initData() {
-
+        deviceAdminManger = new DeviceAdminManger(this);
     }
 
     private void initUI() {
@@ -74,7 +80,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
                 String secretCommand = edSecretCommandRing.getText()
                         .toString().toLowerCase().trim();
                 LocalPrefManger.setRingSecretCommand
-                        (RingSilentPhoneActivity.this,secretCommand);
+                        (RingSilentPhoneActivity.this, secretCommand);
                 finish();
 
                 break;

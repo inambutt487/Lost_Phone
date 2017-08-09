@@ -13,6 +13,13 @@ public interface IPrefConst {
 
     String KEY_ENABLE_LOCATION_PHONE = APPLICATION_ID + "enableLocationPhone";
     String KEY_LOCATION_CODE = APPLICATION_ID + "locationCode";
+    String KEY_TRUSTED_CONTACT_FIRST = APPLICATION_ID + "firstTrustedContact";
+    String KEY_TRUSTED_CONTACT_SECOND = APPLICATION_ID + "secondTrustedContact";
+    String KEY_SECRET_COMMAND_ANTI_THEFT = APPLICATION_ID + "keySecrectCommandAntiTheft";
+    String KEY_ENABLE_ANTI_THEFT = APPLICATION_ID + "keyEnableAntiTheft";
+    String KEY_MESSAGE_ANTI_THEFT = APPLICATION_ID + "keyMessageAntiTheft";
+
+    String KEY_SIM_SERIAL_NUMBER = APPLICATION_ID + "simSerialNumber";
 
 //SecretCommandSMS
 
