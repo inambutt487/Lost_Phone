@@ -11,6 +11,11 @@ public class LostPhoneConstant {
     public static final int ANTI_THEFT_SECURITY = 4;
 
     public static final String EXTRA_PHONE_NUMBER = "extraPhoneNumber";
+    public static final String EXTRA_ANTI_THEFT = "extraAntiTheft";
+    public static final String EXTRA_IMEI = "extraIMEI";
+
+
+    public static final String BASIC_MAP_URL = "https://maps.google.com/maps?daddr=";
 
 
 }

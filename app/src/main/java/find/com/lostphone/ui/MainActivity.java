@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Configuration;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -16,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.CellLocation;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,7 +42,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import find.com.lostphone.R;
 import find.com.lostphone.helper.AudioMangerHelper;
-import find.com.lostphone.service.LocationService;
 import find.com.lostphone.utils.LostPhoneConstant;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initUI();
         /*loadAdd();*/
         dialogLocation();
+
+
     }
     private void dialogLocation() {
         try {
@@ -126,8 +129,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buildLocationSettingsRequest();
         startLocationUpdates();
 
-        //Get the instance of TelephonyManager
-
+    /*    TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber = tMgr.getLine1Number();
+        CellLocation location= tMgr.getCellLocation();*/
     }
 
     private void buildLocationSettingsRequest() {

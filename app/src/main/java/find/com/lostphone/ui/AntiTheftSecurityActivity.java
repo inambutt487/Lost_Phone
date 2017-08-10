@@ -45,6 +45,7 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
                             String simSerialNumber = tm.getSimSerialNumber();
                             LocalPrefManger.setSimSerialNumber(
                                     AntiTheftSecurityActivity.this, simSerialNumber);
+                        //    tm.getDeviceId();
                         }
 
 

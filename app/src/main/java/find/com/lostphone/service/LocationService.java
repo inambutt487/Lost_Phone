@@ -22,6 +22,8 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import find.com.lostphone.R;
+import find.com.lostphone.data.sharedPreference.LocalPrefManger;
 import find.com.lostphone.receiver.SMSReceiver;
 import find.com.lostphone.utils.LostPhoneConstant;
 
@@ -30,13 +32,6 @@ public class LocationService extends Service {
     private static final String TAG = LocationService.class.getSimpleName();
 
     LocationManager locationManager;
-
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-
-    /**
-     * Constant used in the location settings dialog.
-     */
-    private static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -81,7 +76,8 @@ public class LocationService extends Service {
      */
     private Location mCurrentLocation;
 
-    String sender = "";
+    String sender = "", IMEI = "";
+    boolean isAntiTheft;
 
     public LocationService() {
     }
@@ -122,7 +118,12 @@ public class LocationService extends Service {
         if (intent != null) {
             if (intent.hasExtra(LostPhoneConstant.EXTRA_PHONE_NUMBER)) {
                 sender = intent.getStringExtra(LostPhoneConstant.EXTRA_PHONE_NUMBER);
+                isAntiTheft = false;
+            } else if (intent.hasExtra(LostPhoneConstant.EXTRA_ANTI_THEFT)) {
+                IMEI = intent.getStringExtra(LostPhoneConstant.EXTRA_IMEI);
+                isAntiTheft = true;
             }
+
             boolean isGpsEnable = false;
             try {
                 isGpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -134,7 +135,18 @@ public class LocationService extends Service {
                 createLocationCallback();
                 createLocationRequest();
                 startLocationUpdates();
-            }/* else {
+
+            } else {
+
+                if (isAntiTheft) {
+                    AntiTheftMessage();
+                }
+
+                stopSelf();
+            }
+
+
+            /* else {
 
             if (!checkLocationPermission()) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
@@ -199,14 +211,53 @@ public class LocationService extends Service {
 
                 mCurrentLocation = locationResult.getLastLocation();
 
-                String message ="Mobile Location \n"+
-                        "https://maps.google.com/maps?daddr=";
-                message = message+mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude();
-                SMSReceiver.sendSMS(LocationService.this, sender, message);
+                if (sender.isEmpty()) {
+                    String message = "Mobile Location \n" +
+                            LostPhoneConstant.BASIC_MAP_URL;
+                    message = message + mCurrentLocation.getLatitude() + ","
+                            + mCurrentLocation.getLongitude();
+
+                    SMSReceiver.sendSMS(LocationService.this, sender, message);
+                } else if (isAntiTheft) {
+
+                    AntiTheftMessage();
+
+                }
+
                 stopLocationUpdates();
             }
         };
 
+    }
+
+    private void AntiTheftMessage() {
+        String customMessage = LocalPrefManger.
+                getMessageAntiTheft(LocationService.this);
+
+        if (customMessage.isEmpty()) {
+            customMessage = getResources().getString(R.string.custom_msg_for_friend);
+        }
+        String firstContact =
+                LocalPrefManger.getTrustedContactFirst(LocationService.this);
+        String secondContact =
+                LocalPrefManger.getTrustedContactSecond(LocationService.this);
+        String[] turstedContacts = {firstContact, secondContact};
+        for (int i = 0; i < turstedContacts.length; i++) {
+
+            if (turstedContacts[i] != null && !turstedContacts[i].isEmpty()) {
+
+                String message = customMessage + "\n\n\n" + "Mobile Location: \n" +
+                        LostPhoneConstant.BASIC_MAP_URL;
+                message = message + mCurrentLocation.getLatitude() + ","
+                        + mCurrentLocation.getLongitude();
+                message = message + "\n" + "IMEI :" + IMEI;
+                message = message + "\n" + "Lock Code :" +
+                        LocalPrefManger.getLockCodeAntiTheft(LocationService.this);
+
+                SMSReceiver.sendSMS(LocationService.this,
+                        turstedContacts[i], message);
+            }
+        }
     }
 
     private void stopLocationUpdates() {
