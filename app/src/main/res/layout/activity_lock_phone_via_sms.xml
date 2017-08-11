@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="find.com.lostphone.ui.LockPhoneViaSmsActivity">
+        tools:context="antitheft.mobile.find.ui.LockPhoneViaSmsActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -115,9 +115,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:imeOptions="actionDone"
-                android:maxLength="20"
-                android:maxLines="2"
+                android:maxLength="6"
+                android:maxLines="1"
                 android:text="@string/_12345" />
         </LinearLayout>
 
@@ -141,6 +142,7 @@
                 android:textStyle="bold" />
 
             <Button
+
                 android:id="@+id/btnEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

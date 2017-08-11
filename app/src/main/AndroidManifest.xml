@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="find.com.lostphone">
+    package="antitheft.mobile.find">
 
     <!-- Required permissions for all ads. This will apply for all ads. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +17,7 @@
 
     <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/> -->
     <application
-        android:name=".MyApplication"
+        android:name="antitheft.mobile.find.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="antitheft.mobile.find.ui.MainActivity"
             android:theme="@style/MainTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -35,23 +35,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LockPhoneViaSmsActivity"
+            android:name="antitheft.mobile.find.ui.LockPhoneViaSmsActivity"
             android:label="@string/title_activity_lock_phone_via_sms"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.RingSilentPhoneActivity"
+            android:name="antitheft.mobile.find.ui.RingSilentPhoneActivity"
+            android:label="@string/ring_silent_phone"
+
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.PhoneCurrentLocationActivity"
+            android:name="antitheft.mobile.find.ui.PhoneCurrentLocationActivity"
+            android:label="@string/phone_location"
+
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.AntiTheftSecurityActivity"
+            android:label="@string/anti_theft_security"
+
+            android:name="antitheft.mobile.find.ui.AntiTheftSecurityActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <!-- BEGIN_INCLUDE(device_admin_declaration) -->
         <receiver
-            android:name=".receiver.DeviceAdminReceiverLockPhone"
+            android:name="antitheft.mobile.find.receiver.DeviceAdminReceiverLockPhone"
             android:description="@string/lost_phone_admin"
             android:label="@string/lost_phone_admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
@@ -66,7 +72,7 @@
         <!-- END_INCLUDE(device_admin_declaration) -->
 
         <receiver
-            android:name=".receiver.SMSReceiver"
+            android:name="antitheft.mobile.find.receiver.SMSReceiver"
             android:permission="android.permission.BROADCAST_SMS"
             android:priority="99999">
             <intent-filter>
@@ -74,30 +80,30 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.SimChangedReceiver">
+        <receiver android:name="antitheft.mobile.find.receiver.SimChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.SIM_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
         <activity
-            android:name=".ui.RingingActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name="antitheft.mobile.find.ui.RingingActivity"
+            android:parentActivityName="antitheft.mobile.find.ui.MainActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="find.com.lostphone.ui.MainActivity" />
+                android:value="antitheft.mobile.find.ui.MainActivity" />
         </activity>
 
         <service
-            android:name=".service.MediaPlayerService"
+            android:name="antitheft.mobile.find.service.MediaPlayerService"
             android:enabled="true"
             android:exported="true">
 
         </service>
 
         <service
-            android:name=".service.LocationService"
+            android:name="antitheft.mobile.find.service.LocationService"
             android:enabled="true"
             android:exported="true">
 

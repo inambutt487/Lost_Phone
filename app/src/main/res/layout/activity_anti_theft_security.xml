@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:context="find.com.lostphone.ui.LockPhoneViaSmsActivity">
+            tools:context="antitheft.mobile.find.ui.LockPhoneViaSmsActivity">
 
 
             <android.support.v7.widget.CardView
@@ -90,7 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
+                android:maxLength="1000"
                 android:text="@string/custom_msg_for_friend" />
 
             <LinearLayout
@@ -115,9 +116,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:imeOptions="actionDone"
-                    android:maxLength="20"
+                    android:inputType="number"
+                    android:maxLength="6"
                     android:maxLines="2"
                     android:text="@string/_12345" />
             </LinearLayout>

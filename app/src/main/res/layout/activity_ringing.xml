@@ -5,7 +5,7 @@
     android:id="@+id/ringLayout"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context="find.com.lostphone.ui.RingingActivity">
+    tools:context="antitheft.mobile.find.ui.RingingActivity">
 
 
     <TextView
