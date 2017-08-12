@@ -5,11 +5,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
 
 import java.util.List;
 
@@ -24,6 +31,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class RingSilentPhoneActivity extends AppCompatActivity
         implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
     private static final int RC_SMS = 30;
+    private static final String TAG = RingSilentPhoneActivity.class.getSimpleName();
+
+    NativeExpressAdView adView;
+    VideoController mVideoController;
     DeviceAdminManger deviceAdminManger;
     ActionBar actionBar;
     Toolbar toolbar;
@@ -39,7 +50,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
         initData();
         initUI();
         setData();
-
+        loadAd();
         enableRingPhone.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -67,6 +78,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
         setuptoolbar();
+        adView = (NativeExpressAdView) findViewById(R.id.adView);
         enableRingPhone = findViewById(R.id.enableRingPhone);
         edSecretCommandRing = findViewById(R.id.edSecretCommandRing);
         btnSave = findViewById(R.id.btnSave);
@@ -84,11 +96,10 @@ public class RingSilentPhoneActivity extends AppCompatActivity
     }
 
 
-
     private void setData() {
 
         enableRingPhone.
-                setChecked(checkSMSPermission()&&
+                setChecked(checkSMSPermission() &&
                         LocalPrefManger.getRingPhoneEnable(RingSilentPhoneActivity.this));
         edSecretCommandRing.
                 setText(LocalPrefManger.getRingSecretCommand(RingSilentPhoneActivity.this));
@@ -106,6 +117,44 @@ public class RingSilentPhoneActivity extends AppCompatActivity
         }
 
         return isHaveSmsPermission;
+    }
+
+    private void loadAd() {
+        // Locate the NativeExpressAdView.
+        adView = (NativeExpressAdView) findViewById(R.id.adView);
+
+        // Set its video options.
+        adView.setVideoOptions(new VideoOptions.Builder()
+                .setStartMuted(true)
+                .build());
+
+        // The VideoController can be used to get lifecycle events and info about an ad's video
+        // asset. One will always be returned by getVideoController, even if the ad has no video
+        // asset.
+        mVideoController = adView.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                Log.d(TAG, "Video playback is finished.");
+                super.onVideoEnd();
+            }
+        });
+
+        // Set an AdListener for the AdView, so the Activity can take action when an ad has finished
+        // loading.
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if (mVideoController.hasVideoContent()) {
+                    Log.d(TAG, "Received an ad that contains a video asset.");
+                } else {
+                    Log.d(TAG, "Received an ad that does not contain a video asset.");
+                }
+            }
+        });
+
+        adView.loadAd(new AdRequest.Builder()
+                .addTestDevice("4566678A62E155DF738BB6C45B32AD4E").build());
     }
 
     @Override
@@ -171,6 +220,7 @@ public class RingSilentPhoneActivity extends AppCompatActivity
             checkSMSPermission();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

@@ -17,6 +17,7 @@
 
     <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/> -->
     <application
+
         android:name="antitheft.mobile.find.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -108,6 +109,9 @@
             android:exported="true">
 
         </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="702d83c74dc8026ca8697724895e17cde4ae49d5" />
     </application>
 
 </manifest>

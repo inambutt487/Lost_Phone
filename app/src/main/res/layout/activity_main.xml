@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,17 +33,17 @@
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
         </android.support.design.widget.AppBarLayout>
 
-<!--
-        <com.google.android.gms.ads.NativeExpressAdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            ads:adSize="FULL_WIDTHx80"
-            ads:adUnitId="ca-app-pub-3940256099942544/2177258514" />
--->
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/add_unit_bannar" />
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_above="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appBarLayout">
@@ -53,50 +55,49 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:adjustViewBounds="true"
                     android:id="@+id/imgIntro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/image_telling"
-                    android:src="@drawable/ic_top_banner" />
+                    android:src="@drawable/top_ban_one" />
 
                 <LinearLayout
                     android:id="@+id/firstSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
-                        android:onClick="onClick"
                         android:id="@+id/txtLockPhoneViaSms"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_lock"
+                        android:drawablePadding="8dp"
+                        android:drawableTop="@mipmap/ic_ring"
                         android:gravity="center"
-                        android:padding="12dp"
+                        android:onClick="onClick"
                         android:text="@string/lock_phone_via_sms"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/txtColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:onClick="onClick"
-
                         android:id="@+id/txtRingSilentPhone"
                         android:layout_width="0dp"
-
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_ring"
+                        android:drawablePadding="8dp"
+                        android:drawableTop="@mipmap/ic_lock"
                         android:gravity="center"
-                        android:padding="12dp"
+                        android:onClick="onClick"
                         android:text="@string/ring_silent_phone"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/txtColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -106,39 +107,38 @@
                     android:id="@+id/SecondSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
                     <TextView
                         android:id="@+id/txtGetLocation"
-                        android:onClick="onClick"
-
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_location"
+                        android:drawablePadding="8dp"
+                        android:drawableTop="@mipmap/ic_location"
                         android:gravity="center"
-                        android:padding="12dp"
+                        android:onClick="onClick"
                         android:text="@string/get_phone_current_location"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/txtColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:onClick="onClick"
-
                         android:id="@+id/txtAntiTheftSecurity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_anti_theft"
+                        android:drawablePadding="8dp"
+                        android:drawableTop="@mipmap/ic_anti_theft"
                         android:gravity="center"
-                        android:padding="12dp"
+                        android:onClick="onClick"
                         android:text="@string/antitheft_security"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/txtColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>

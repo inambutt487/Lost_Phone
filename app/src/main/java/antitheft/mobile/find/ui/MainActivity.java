@@ -22,8 +22,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.ads.VideoController;
 import com.google.android.gms.ads.VideoOptions;
@@ -37,6 +40,7 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.List;
 
 import antitheft.mobile.find.R;
@@ -54,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     private SettingsClient mSettingsClient;
     private LocationSettingsRequest mLocationSettingsRequest;
 
+    private InterstitialAd mInterstitialAd;
+
     VideoController videoController;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
@@ -67,18 +73,73 @@ public class MainActivity extends AppCompatActivity
 
     LocationManager locationManager;
 
+    private AdView mAdView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         initData();
         initUI();
-        /*loadAdd();*/
+        loadBannerAdd();
         checkMultiPulPermission();
         dialogLocation();
 
 
     }
+
+    private void newInterstitial() {
+        mInterstitialAd = new InterstitialAd(MainActivity.this);
+        mInterstitialAd.setAdUnitId(getString(R.string.add_unit_interstial));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(TAG, "onAdLoaded TRUE");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                requestInterstitial();
+                Log.d(TAG, "onAdLoaded ERROR " + errorCode);
+            }
+
+        });
+    }
+
+    private void requestInterstitial() {
+
+/*
+        .addTestDevice("4566678A62E155DF738BB6C45B32AD4E")
+*/
+        if (mInterstitialAd != null) {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("4566678A62E155DF738BB6C45B32AD4E")
+                    .build();
+            mInterstitialAd.loadAd(adRequest);
+        }
+
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+                requestInterstitial();
+            } else if (!mInterstitialAd.isLoading()) {
+                requestInterstitial();
+            }
+        } else {
+            newInterstitial();
+            requestInterstitial();
+        }
+
+    }
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
 
     private void checkMultiPulPermission() {
         String[] perms = {LostPhoneConstant.PARM_READ_SMS_PERMISSION,
@@ -125,13 +186,15 @@ public class MainActivity extends AppCompatActivity
     private void initData() {
         mSettingsClient = LocationServices.getSettingsClient(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-
+        newInterstitial();
+        requestInterstitial();
     }
 
     private void initUI() {
         /*adView = findViewById(R.id.adView);*/
-        drawerLayout = findViewById(R.id.drawerLayout);
+        /*drawerLayout = findViewById(R.id.drawerLayout);*/
+        mAdView = (AdView) findViewById(R.id.adView);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         nvView = findViewById(R.id.nvView);
@@ -139,10 +202,10 @@ public class MainActivity extends AppCompatActivity
         txtRingSilentPhone = findViewById(R.id.txtRingSilentPhone);
         txtGetLocation = findViewById(R.id.txtGetLocation);
         txtAntiTheftSecurity = findViewById(R.id.txtAntiTheftSecurity);
-        setupNavDrawerContent(nvView);
+      /*  setupNavDrawerContent(nvView);
         drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
-        drawerLayout.addDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);*/
         buildLocationSettingsRequest();
         startLocationUpdates();
 
@@ -206,9 +269,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void loadAdd() {
+    private void loadBannerAdd() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
 
-        AdRequest request = new AdRequest.Builder()
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
+      /*  AdRequest request = new AdRequest.Builder()
                 .build();
         adView.setVideoOptions(new VideoOptions.Builder()
                 .setStartMuted(true)
@@ -238,7 +305,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        adView.loadAd(request);
+        adView.loadAd(request);*/
     }
 
     public void setupNavDrawerContent(NavigationView nvView) {
@@ -272,12 +339,12 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.closeDrawers();
     }
 
-    @Override
+   /* @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
-    }
+    }*/
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -302,6 +369,7 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(new Intent(MainActivity.this,
                                 LockPhoneViaSmsActivity.class),
                         LostPhoneConstant.LOCK_PHONE_VIA_SMS);
+                /*forceCrash(txtLockPhoneViaSms);*/
                 break;
             case R.id.txtRingSilentPhone:
                 AudioMangerHelper mangerHelper = new AudioMangerHelper(MainActivity.this);
@@ -333,6 +401,8 @@ public class MainActivity extends AppCompatActivity
             case LostPhoneConstant.RING_SILENT_PHONE:
             case LostPhoneConstant.GET_CURRENT_LOCATION_PHONE:
             case LostPhoneConstant.ANTI_THEFT_SECURITY:
+                showInterstitial();
+
                 break;
         }
     }

@@ -17,7 +17,9 @@ public class AntiTheftHelper {
 
     public static void antiTheftCheck(Context context) {
 
-        if (LocalPrefManger.getAntiTheftEnable(context)) {
+        DeviceAdminManger deviceAdminManger= new DeviceAdminManger(context);
+
+        if (LocalPrefManger.getAntiTheftEnable(context)&& deviceAdminManger.isActiveAdmin()) {
             TelephonyManager tm = (TelephonyManager)
                     context.getSystemService(Context.TELEPHONY_SERVICE);
             String simSerialNumber = tm.getSimSerialNumber();

@@ -9,24 +9,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
+
 import antitheft.mobile.find.R;
 import antitheft.mobile.find.data.sharedPreference.LocalPrefManger;
 import antitheft.mobile.find.helper.DeviceAdminManger;
 import antitheft.mobile.find.utils.LostPhoneConstant;
+import antitheft.mobile.find.utils.LostPhoneUtil;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class AntiTheftSecurityActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = AntiTheftSecurityActivity.class.getSimpleName();
+
     private static final int REQUEST_CODE_ENABLE_ADMIN = 20;
     private static final int RC_SMS_PHONE_STATE_AND_LOCATION = 50;
 
+    NativeExpressAdView adView;
+    VideoController mVideoController;
     DeviceAdminManger deviceAdminManger;
-
     ActionBar actionBar;
     Toolbar toolbar;
     SwitchCompat enableAntiTheft;
@@ -40,7 +51,7 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
         initData();
         initUI();
         setData();
-
+        loadAd();
         enableAntiTheft.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -108,6 +119,7 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
         setuptoolbar();
+        adView = (NativeExpressAdView) findViewById(R.id.adView);
         enableAntiTheft = findViewById(R.id.enableAntiTheft);
         edContactFirst = findViewById(R.id.edContactFirst);
         edContactSecond = findViewById(R.id.edContactSecond);
@@ -125,6 +137,45 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void loadAd() {
+        // Locate the NativeExpressAdView.
+        adView = findViewById(R.id.adView);
+
+        // Set its video options.
+        adView.setVideoOptions(new VideoOptions.Builder()
+                .setStartMuted(true)
+                .build());
+
+        // The VideoController can be used to get lifecycle events and info about an ad's video
+        // asset. One will always be returned by getVideoController, even if the ad has no video
+        // asset.
+        mVideoController = adView.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                Log.d(TAG, "Video playback is finished.");
+                super.onVideoEnd();
+            }
+        });
+
+        // Set an AdListener for the AdView, so the Activity can take action when an ad has finished
+        // loading.
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                adView.setVisibility(View.VISIBLE);
+                if (mVideoController.hasVideoContent()) {
+                    Log.d(TAG, "Received an ad that contains a video asset.");
+                } else {
+                    Log.d(TAG, "Received an ad that does not contain a video asset.");
+                }
+            }
+        });
+
+        adView.loadAd(new AdRequest.Builder().
+                addTestDevice("4566678A62E155DF738BB6C45B32AD4E").build());
     }
 
 
@@ -158,6 +209,19 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
 
                 break;
             case R.id.btnEmail:
+                String subject = "Anti theft Info";
+                String body = "Message: " +
+                        LocalPrefManger.getMessageAntiTheft(AntiTheftSecurityActivity.this)
+                        + " \n\n" +
+                        "First Contact: " + LocalPrefManger.getTrustedContactFirst(AntiTheftSecurityActivity.this)
+                        + "\n \n" +
+
+                        "Second Contact: " + LocalPrefManger.getTrustedContactSecond(AntiTheftSecurityActivity.this) +
+                        "\n \n" +
+
+                        "Lock Code : " + LocalPrefManger.getLockCodeAntiTheft(AntiTheftSecurityActivity.this);
+
+                LostPhoneUtil.sendEmail(this, subject, body);
                 break;
 
 

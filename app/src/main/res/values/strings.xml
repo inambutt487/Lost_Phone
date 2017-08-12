@@ -3,7 +3,7 @@
     <string name="image_telling">Image telling</string>
     <string name="lock_phone_via_sms">Lock phone via Sms</string>
     <string name="ring_silent_phone">Ring silent phone</string>
-    <string name="get_phone_current_location">Get phone current location</string>
+    <string name="get_phone_current_location">Phone  location</string>
     <string name="antitheft_security">Anti theft security</string>
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -42,5 +42,10 @@
     <string name="with_out_this_request">Please give us these permission ,With out this permission this feature will not work</string>
     <string name="phone_location">Phone Location</string>
     <string name="anti_theft_security">Anti Theft Security</string>
+    <string name="add_unit_interstial">ca-app-pub-1309719266805490/4921952913</string>
+    <string name="add_unit_native_small">ca-app-pub-1309719266805490/7072531584</string>
+    <string name="add_unit_bannar">ca-app-pub-1309719266805490/7678202090</string>
+    <string name="recommended">Recommended</string>
+
 
 </resources>

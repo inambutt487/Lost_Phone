@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "331736352454",
+    "firebase_url": "https://newtest-62a37.firebaseio.com",
+    "project_id": "newtest-62a37",
+    "storage_bucket": "newtest-62a37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331736352454:android:6ab658f0386d2cc1",
+        "android_client_info": {
+          "package_name": "antitheft.mobile.find"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331736352454-n13qeq6qll6fbfunvcp0p2au9m73c7ao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "antitheft.mobile.find",
+            "certificate_hash": "d6c13f4f8fa0b1e137babb8b0a7fd01f1eccf78c"
+          }
+        },
+        {
+          "client_id": "331736352454-5huf4bmh7qtm1ikv95f7rdi91a43rp17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjhOAeNrVV1_PjefJKnotopyKFhZKgM3I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331736352454-5huf4bmh7qtm1ikv95f7rdi91a43rp17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
