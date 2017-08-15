@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -88,15 +88,16 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:gravity="center"
-                    android:drawablePadding="4dp"
-                    android:drawableEnd="@drawable/info"
-                    android:drawableRight="@drawable/info"
                     android:id="@+id/txtSecretCommand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
+                    android:drawableEnd="@drawable/info"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/info"
+                    android:gravity="center"
+                    android:onClick="onClick"
                     android:text="@string/secret_command"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -121,15 +122,16 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:gravity="center"
-                    android:drawablePadding="4dp"
-                    android:drawableEnd="@drawable/info"
-                    android:drawableRight="@drawable/info"
+                    android:onClick="onClick"
                     android:id="@+id/txtLockCode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="18dp"
                     android:layout_weight="1"
+                    android:drawableEnd="@drawable/info"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/info"
+                    android:gravity="center"
                     android:text="@string/lock_code"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -179,16 +181,17 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <TextView
 
-                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/recommended"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

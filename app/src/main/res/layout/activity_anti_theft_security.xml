@@ -112,6 +112,7 @@
                 android:weightSum="2">
 
                 <TextView
+                    android:onClick="onClick"
                     android:id="@+id/txtLockCode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

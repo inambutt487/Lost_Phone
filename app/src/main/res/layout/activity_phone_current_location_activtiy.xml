@@ -89,6 +89,7 @@
                 android:weightSum="2">
 
                 <TextView
+                    android:onClick="onClick"
                     android:gravity="center"
                     android:drawablePadding="4dp"
                     android:drawableEnd="@drawable/info"

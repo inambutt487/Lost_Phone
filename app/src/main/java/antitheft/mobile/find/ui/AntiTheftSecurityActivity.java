@@ -2,19 +2,30 @@ package antitheft.mobile.find.ui;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -40,6 +51,7 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
     DeviceAdminManger deviceAdminManger;
     ActionBar actionBar;
     Toolbar toolbar;
+    TextView txtLockCode;
     SwitchCompat enableAntiTheft;
     EditText edContactFirst, edContactSecond, edMsgAntiTheft, edLockCode;
     Button btnSave, btnEmail;
@@ -127,6 +139,7 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
         edLockCode = findViewById(R.id.edLockCode);
         btnSave = findViewById(R.id.btnSave);
         btnEmail = findViewById(R.id.btnEmail);
+        txtLockCode = findViewById(R.id.txtLockCode);
     }
 
     private void setuptoolbar() {
@@ -223,6 +236,12 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
 
                 LostPhoneUtil.sendEmail(this, subject, body);
                 break;
+            case R.id.txtLockCode:
+                LostPhoneUtil.Alertdialog(AntiTheftSecurityActivity.this,
+                        getString(R.string.lock_code),
+                        getString(R.string.msg_anti_theft), getString(R.string.ok));
+
+                break;
 
 
         }
@@ -297,13 +316,24 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+        } else if (id == R.id.menu_help) {
+
+            helpDialoge(AntiTheftSecurityActivity.this,"Ok");
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private boolean checkMultiPulPermission() {
         boolean isHaveSmsPermission = true;
@@ -320,5 +350,42 @@ public class AntiTheftSecurityActivity extends AppCompatActivity implements View
         return isHaveSmsPermission;
     }
 
+    private void helpDialoge(Context context,String ok) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton(ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_layout_anti_theft, null);
+        dialog.setView(dialogLayout);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.show();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface d) {
+                ImageView image = dialog.findViewById(R.id.imgHelp);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.anti_theft);
+                try {
+
+                    float imageWidthInPX = (float)image.getWidth();
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
+                            Math.round(imageWidthInPX * (float)icon.getHeight() / (float)icon.getWidth()));
+                    image.setLayoutParams(layoutParams);
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
 
 }

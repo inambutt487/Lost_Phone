@@ -46,6 +46,13 @@
     <string name="add_unit_native_small">ca-app-pub-1309719266805490/7072531584</string>
     <string name="add_unit_bannar">ca-app-pub-1309719266805490/7678202090</string>
     <string name="recommended">Recommended</string>
+    <string name="msg_secret_command">Send this secret command to lock the phone</string>
+    <string name="ok">Ok</string>
+    <string name="msg_lock_code">This will be the lock code when you sent the secret command</string>
+    <string name="msg_ring_silent_phone">Send this Secret Command to Ring the silent phone</string>
+    <string name="msg_current_location">Send this secret Command to get the current location of Phone</string>
+    <string name="msg_anti_theft">This will be the lock code when some one tries to change the sim</string>
+    <string name="help">Help</string>
 
 
 </resources>

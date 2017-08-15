@@ -1,16 +1,28 @@
 package antitheft.mobile.find.ui;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -31,6 +43,7 @@ public class PhoneCurrentLocationActivity extends AppCompatActivity
     private static final int RC_SMS_location = 40;
     NativeExpressAdView adView;
     VideoController mVideoController;
+    TextView txtSecretCommand;
     ActionBar actionBar;
     Toolbar toolbar;
     SwitchCompat enablePhoneLocation;
@@ -72,6 +85,7 @@ public class PhoneCurrentLocationActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setuptoolbar();
         adView = (NativeExpressAdView) findViewById(R.id.adView);
+        txtSecretCommand = findViewById(R.id.txtSecretCommand);
         enablePhoneLocation = findViewById(R.id.enablePhoneLocation);
         edSecretLocationCommand = findViewById(R.id.edSecretLocationCommand);
         btnSave = findViewById(R.id.btnSave);
@@ -155,6 +169,12 @@ public class PhoneCurrentLocationActivity extends AppCompatActivity
 
                 LostPhoneUtil.sendEmail(this, subject, body);
                 break;
+            case R.id.txtSecretCommand:
+                LostPhoneUtil.Alertdialog(PhoneCurrentLocationActivity.this,
+                        getString(R.string.secret_command),
+                        getString(R.string.msg_current_location), getString(R.string.ok));
+
+                break;
         }
     }
 
@@ -183,12 +203,61 @@ public class PhoneCurrentLocationActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+        } else if (id == R.id.menu_help) {
+
+            helpDialoge(PhoneCurrentLocationActivity.this,"Ok");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void helpDialoge(Context context,String ok) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton(ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_layout_phone_location, null);
+        dialog.setView(dialogLayout);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.show();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface d) {
+                ImageView image = dialog.findViewById(R.id.imgHelp);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.get_phone_location);
+                try {
+
+                    float imageWidthInPX = (float)image.getWidth();
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
+                            Math.round(imageWidthInPX * (float)icon.getHeight() / (float)icon.getWidth()));
+                    image.setLayoutParams(layoutParams);
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     private boolean checkSMSAndLocationPermission() {

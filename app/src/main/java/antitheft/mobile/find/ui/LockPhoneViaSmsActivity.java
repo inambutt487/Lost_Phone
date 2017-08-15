@@ -1,18 +1,30 @@
 package antitheft.mobile.find.ui;
 
 import android.app.admin.DevicePolicyManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -32,7 +44,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class LockPhoneViaSmsActivity extends AppCompatActivity
         implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
-    private static final String TAG=LockPhoneViaSmsActivity.class.getSimpleName();
+    private static final String TAG = LockPhoneViaSmsActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_ENABLE_ADMIN = 20;
     private static final int RC_SMS = 21;
@@ -42,6 +54,7 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity
     VideoController mVideoController;
     DeviceAdminManger deviceAdminManger;
     Toolbar toolbar;
+    TextView txtSecretCommand, txtLockCode;
     ActionBar actionBar;
     SwitchCompat enableLockPhoneSms;
     EditText edSecretCommand, edLockCode;
@@ -133,8 +146,9 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity
 
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
-        adView = (NativeExpressAdView) findViewById(R.id.adView);
-
+        adView = findViewById(R.id.adView);
+        txtSecretCommand = findViewById(R.id.txtSecretCommand);
+        txtLockCode = findViewById(R.id.txtLockCode);
         setuptoolbar();
         enableLockPhoneSms = findViewById(R.id.enableLockPhoneSms);
         edSecretCommand = findViewById(R.id.edSecretCommand);
@@ -194,8 +208,18 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity
                 LostPhoneUtil.sendEmail(this, subject, body);
 
                 break;
+            case R.id.txtSecretCommand:
+                LostPhoneUtil.Alertdialog(LockPhoneViaSmsActivity.this, getString(R.string.secret_command),
+                        getString(R.string.msg_secret_command), getString(R.string.ok));
+                break;
+            case R.id.txtLockCode:
+                LostPhoneUtil.Alertdialog(LockPhoneViaSmsActivity.this, getString(R.string.lock_code),
+                        getString(R.string.msg_lock_code), getString(R.string.ok));
+
+                break;
         }
     }
+
 
     private boolean isValidationSuccess(String secretCommand, String lockCode) {
 
@@ -240,13 +264,25 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+        } else if (id == R.id.menu_help) {
+
+            helpDialoge(LockPhoneViaSmsActivity.this, "Ok");
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -287,4 +323,43 @@ public class LockPhoneViaSmsActivity extends AppCompatActivity
 
         return isHaveSmsPermission;
     }
+
+    private void helpDialoge(Context context, String ok) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton(ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_layout_lock_sms, null);
+        dialog.setView(dialogLayout);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.show();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface d) {
+                ImageView image = dialog.findViewById(R.id.imgHelp);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.lock_phone);
+                try {
+
+                    float imageWidthInPX = (float) image.getWidth();
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Math.round(imageWidthInPX),
+                            Math.round(imageWidthInPX * (float) icon.getHeight() / (float) icon.getWidth()));
+                    image.setLayoutParams(layoutParams);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
 }

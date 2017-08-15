@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
 
         if (!gps_enabled && !network_enabled) {
             // notify user
-            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
             dialog.setTitle(R.string.improve_location_accuracy);
             dialog.setMessage(R.string.ensure_location_service);
             dialog.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity
                     // TODO Auto-generated method stub
                     Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(myIntent);
+
                 }
             });
             dialog.show();
